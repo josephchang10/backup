@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: UTF-8 -*-
 # Filename: backup_ver1.py
 
 import os
@@ -17,14 +18,19 @@ today = target_dir + time.strftime('%Y%m%d')
 # The current time is the name of the zip archive
 now = time.strftime('%H%M%S')
 
+# Take a comment from the user to create the name of the zip file
+comment = raw_input('输入备注（可选）--> ')
+if len(comment) == 0: # check if a comment was entered
+    target = today + os.sep + now + '.zip'
+else:
+    target = today + os.sep + now + '_' + comment.replace(' ', '_') + '.zip'
+
 # Create the subdirectory if it isn't already there
 if not os.path.exists(today):
-    os.makedirs(today) # make directory
+    os.mkdir(today) # make directory
     print 'Successfully created directory', today
 else:
     print 'Directory exists'
-# The name of the zip file
-target = today + os.sep + now + '.zip'
 
 # 5. We use the zip command (in Unix/Linux) to put the files in a zip archive
 zip_command = "zip -qr %s %s" % (target, ' '.join(source))
